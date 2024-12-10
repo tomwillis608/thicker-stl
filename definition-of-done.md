@@ -11,7 +11,7 @@
 - Pass accessibility tests (manual and automatic)
 - Refactor code to current understanding
 - Tech dept eliminated to current understanding of domain
-- UI passes QA 
+- UI passes QA
 - Updated build process as needed
 - Updated documentation including decision records as needed
 - Updated performance tests as needed
