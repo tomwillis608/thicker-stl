@@ -1,15 +1,19 @@
-""" Test cylinder generator. """
+"""Test cylinder generator."""
 
 import os
-from tests.utils.generate_test_cylinder import create_test_stl
 from tempfile import TemporaryDirectory
+
 import pytest
+
+from tests.utils.generate_test_cylinder import create_test_stl
+
 
 @pytest.fixture
 def temporary_directory():
     """Provide a temporary directory for tests."""
     with TemporaryDirectory() as tmp_dir:
         yield tmp_dir
+
 
 def test_create_cylinder_stl(temporary_directory):
     """Test the creation of a cylinder STL file."""
