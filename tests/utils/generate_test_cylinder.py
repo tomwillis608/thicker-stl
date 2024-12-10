@@ -4,7 +4,7 @@ import numpy as np
 from stl import mesh
 
 
-def create_test_stl():
+def create_test_stl(output_path: str) -> str:
     """ Create a simple cylinder STL file (with a radius of 1 unit and height of 2 units). """
 
     # Parameters for the cylinder
@@ -26,9 +26,8 @@ def create_test_stl():
             test_mesh.vectors[i][j] = vertices[face[j], :]
 
     # Save the mesh to a file
-    file_path = "test_cylinder.stl"
-    test_mesh.save(file_path)
-    return file_path
+    test_mesh.save(output_path)
+    return output_path
 
 
 def generate_vertices(height, radius, segments):
@@ -70,5 +69,6 @@ def generate_faces(segments, vertices):
 
 
 # Create and save the test STL file
-STL_FILE = create_test_stl()
-print(f"Test STL file saved to: {STL_FILE}")
+if __name__ == "__main__": # pragma: no cover
+    STL_FILE = create_test_stl("test_cylinder.stl")
+    print(f"Test STL file saved to: {STL_FILE}")

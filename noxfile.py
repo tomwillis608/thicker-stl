@@ -1,3 +1,4 @@
+""" nox file for the project - automate the development tasks. """
 import nox
 
 # Define the Nox sessions
@@ -24,3 +25,23 @@ def install_dependencies(session):
     """
     # Install dependencies (using the generated requirements-dev.txt or requirements.txt)
     session.install('-r', 'requirements-dev.txt')  # Use requirements.txt if only prod dependencies are needed
+
+# @nox.session(python=["3.10", "3.11"])
+@nox.session(python=["3.11"])
+def coverage(session):
+    """
+    Run tests and measure code coverage.
+    """
+    # Install dependencies
+    # session.install("pytest", "pytest-cov")
+    # Install all dev dependencies, including testing tools and numpy
+    session.install("-r", "requirements-dev.txt")
+
+    # Run pytest with coverage
+    session.run(
+        "pytest",
+        "--cov=tests.utils",        # Measure coverage for this module/package
+        "--cov-report=term-missing",  # Show missing lines in the terminal
+        "--cov-report=html",       # Generate an HTML coverage report
+    )
+    session.log("HTML report generated in 'htmlcov/' directory")
