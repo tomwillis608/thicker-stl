@@ -3,7 +3,7 @@
 
 [tool.ruff]
 # Specify target Python version
-target-version = "py310"
+target-version = "py311"
 
 # Enable autofix
 fix = true
