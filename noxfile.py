@@ -46,9 +46,28 @@ def coverage(session):
     # Run pytest with coverage
     session.run(
         "pytest",
-        "--cov=tests.utils",  # Measure coverage for this module/package
+        "--cov=thicker",  # Measure coverage for this module/package
         "--cov-report=term-missing",  # Show missing lines in the terminal
         "--cov-report=html",  # Generate an HTML coverage report
+    )
+    session.log("XML report generated in 'xmlcov/' directory")
+
+
+@nox.session(python=["3.11"])
+def coverage_ci(session):
+    """
+    Run tests and measure code coverage in XML for CI.
+    """
+
+    # Install all dev dependencies, including testing tools and numpy
+    session.install("-r", DEV_REQUIREMENTS)
+
+    # Run pytest with coverage
+    session.run(
+        "pytest",
+        "--cov=thicker",  # Measure coverage for this module/package
+        "--cov-report=term-missing",  # Show missing lines in the terminal
+        "--cov-report=xml",  # Generate an HTML coverage report
     )
     session.log("HTML report generated in 'htmlcov/' directory")
 
