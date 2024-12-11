@@ -1,16 +1,20 @@
 # thicker-stl - a 3D Model Thickening Tool
 
-Today's TTRPG mini figures are too dainty. Make those STL thicker. 
+Today's TTRPG mini figures are too dainty. Make those STL thicker.
 
 ## Project Overview
 
-This tool is designed to apply a thickening algorithm to 3D models stored in STL (Stereolithography) format. The primary goal is to preserve the overall shape of the model while thickening thin parts (e.g., limbs, fingers) to improve structural integrity, especially for tabletop miniatures.
+This tool is designed to apply a thickening algorithm to 3D models stored in STL (Stereolithography) format. The primary
+goal is to preserve the overall shape of the model while thickening thin parts (e.g., limbs, fingers) to improve
+structural integrity, especially for tabletop miniatures.
 
-The tool focuses on **simple geometric modification** of STL models, making it ideal for 3D models used in tabletop games.
+The tool focuses on **simple geometric modification** of STL models, making it ideal for 3D models used in
+tabletop games.
 
 ## Features
 
-- **STL File Input/Output**: Load 3D models in STL format, apply thickening, and save the modified model back in STL format.
+- **STL File Input/Output**: Load 3D models in STL format, apply thickening, and save the modified model back in
+STL format.
 - **Thickening Algorithm**: Increases the thickness of 3D models without altering their fundamental shape.
 - **Command-Line Interface (CLI)**: Easy-to-use terminal-based interface for interacting with the tool.
 
@@ -19,18 +23,21 @@ The tool focuses on **simple geometric modification** of STL models, making it i
 To get started, you need Python 3.10 or higher installed on your system.
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/thickening-tool.git
    cd thickening-tool
    ```
 
 2. Set up a virtual environment (optional but recommended):
+
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. Install dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -48,6 +55,7 @@ python main.py --input cylinder.stl --output thickened_cylinder.stl
 ```
 
 Where:
+
 - `--input`: Path to the input STL file.
 - `--output`: Path where the thickened STL file will be saved.
 
@@ -55,7 +63,7 @@ Where:
 
 ### Project Structure
 
-```
+```text
 /docs
     /adrs        # Architectural Decision Records
 /src
@@ -88,7 +96,8 @@ ruff .
 
 ## Architectural Decisions
 
-- **STL File Format**: We chose to use the STL file format for simplicity and wide support. Refer to the [ADR 001](docs/adrs/001-choosing-stl-file-format.md) for more details.
+- **STL File Format**: We chose to use the STL file format for simplicity and wide support.
+- Refer to the [ADR 001](docs/adrs/001-choosing-stl-file-format.md) for more details.
 
 ## Contributing
 
@@ -97,4 +106,3 @@ Contributions are welcome! If you have ideas for improving the tool or fixing is
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
