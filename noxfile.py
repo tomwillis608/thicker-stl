@@ -20,9 +20,7 @@ def generate_requirements(session):
     session.run("pip-compile", "requirements.in", "--output-file", "requirements.txt")
 
     # Generate the development requirements.txt, including production dependencies
-    session.run(
-        "pip-compile", "requirements-dev.in", "--output-file", DEV_REQUIREMENTS
-    )
+    session.run("pip-compile", "requirements-dev.in", "--output-file", DEV_REQUIREMENTS)
 
 
 @nox.session
@@ -32,9 +30,7 @@ def install_dependencies(session):
     from the requirements-dev.txt.
     """
     # Install dependencies (using the generated requirements-dev.txt)
-    session.install(
-        "-r", DEV_REQUIREMENTS
-    )
+    session.install("-r", DEV_REQUIREMENTS)
 
 
 # @nox.session(python=["3.10", "3.11"])
