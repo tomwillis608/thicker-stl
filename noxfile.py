@@ -68,6 +68,7 @@ def coverage_ci(session):
         "--cov=thicker",  # Measure coverage for this module/package
         "--cov-report=term-missing",  # Show missing lines in the terminal
         "--cov-report=xml",  # Generate an HTML coverage report
+        "--cov-fail-under=100",  # Set your coverage threshold
     )
     session.log("HTML report generated in 'htmlcov/' directory")
 
