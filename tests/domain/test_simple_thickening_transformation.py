@@ -6,13 +6,13 @@ from thicker.domain.mesh import Mesh
 from thicker.domain.transformations import thicken_mesh
 
 
-def test_thickening_transformation():
+@pytest.mark.parametrize("offset", [0.1, 0, -0.2])
+def test_thickening_transformation(offset):
     """Test that thickening transformation increases vertex distances from origin."""
     # Arrange: Define a simple mesh but do not include a vertex at the origin
     vertices = [(0, 0, 1), (1, 0, 0), (0, 1, 0)]
     faces = [(0, 1, 2)]
     original_mesh = Mesh(vertices=vertices, faces=faces)
-    offset = 0.1  # Thickness amount
 
     # Act: Apply the thickening transformation
     thickened_mesh = thicken_mesh(original_mesh, offset)
@@ -26,7 +26,7 @@ def test_thickening_transformation():
             + (original_vertex[1] - thickened_vertex[1]) ** 2
             + (original_vertex[2] - thickened_vertex[2]) ** 2
         ) ** 0.5
-        assert pytest.approx(distance, 0.01) == offset
+        assert pytest.approx(distance, 0.01) == abs(offset)
 
     # Assert: Faces remain unchanged
     assert thickened_mesh.faces == original_mesh.faces

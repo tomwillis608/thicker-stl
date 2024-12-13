@@ -16,3 +16,9 @@ class Mesh:
     ):
         self.vertices = vertices
         self.faces = faces
+
+    def __eq__(self, other):
+        """Overrides the default implementation"""
+        if isinstance(other, Mesh):
+            return (self.vertices == other.vertices) and (self.faces == other.faces)
+        return False
