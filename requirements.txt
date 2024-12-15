@@ -5,7 +5,9 @@
 #    pip-compile --output-file=requirements.txt requirements.in
 #
 numpy==2.2.0
-    # via numpy-stl
+    # via
+    #   -r requirements.in
+    #   numpy-stl
 numpy-stl==3.2.0
     # via -r requirements.in
 python-utils==3.9.1

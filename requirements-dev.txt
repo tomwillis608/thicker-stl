@@ -9,7 +9,9 @@ coverage[toml]==7.6.9
 iniconfig==2.0.0
     # via pytest
 numpy==2.2.0
-    # via numpy-stl
+    # via
+    #   -r /home/tomas/develop/thicker-stl/requirements.in
+    #   numpy-stl
 numpy-stl==3.2.0
     # via -r /home/tomas/develop/thicker-stl/requirements.in
 packaging==24.2

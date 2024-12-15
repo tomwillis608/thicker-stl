@@ -2,10 +2,10 @@
 
 from typing import List, Tuple
 
-from thicker.external.humble_stls import STLReader
+from thicker.external.humble_stls import Humble_STL_IO
 
 
-def process_stl_data(
+def read_stl_data(
     file_path: str,
 ) -> Tuple[List[Tuple[float, float, float]], List[Tuple[int, int, int]]]:
     """
@@ -19,8 +19,8 @@ def process_stl_data(
             List[Tuple[int, int, int]]]: Processed vertices and faces.
     """
 
-    # Delegate to the humble object to load data
-    vertices, faces = STLReader.load(file_path)
+    # Delegate to the humble object to read data
+    vertices, faces = Humble_STL_IO.read(file_path)
 
     # Type assertions to ensure the data is well-formed
     assert isinstance(vertices, list), "Vertices must be a list."
@@ -38,3 +38,24 @@ def process_stl_data(
     ), "Each face must be a tuple of three integers."
 
     return vertices, faces
+
+
+def write_stl_data(
+    file_path: str,
+    vertices: List[Tuple[float, float, float]],
+    faces: List[Tuple[int, int, int]],
+):
+    """
+    Write STL data by delegating to the humble object.
+
+    Args:
+        file_path (str): Path to the STL file.
+        vectors (List[Tuple[float, float, float]]): The vertices of the shape.
+        faces (List[Tuple[int, int, int]]): The faces of the shape.
+
+    Returns:
+        none
+    """
+
+    # Delegate to the humble object to write data
+    Humble_STL_IO.write(file_path, vertices, faces)
