@@ -2,6 +2,9 @@
 
 Today's TTRPG mini figures are too dainty. Make those STL thicker.
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tomwillis608/thicker-stl/main.svg)]
+(<https://results.pre-commit.ci/latest/github/tomwillis608/thicker-stl/main>)
+
 ## Project Overview
 
 This tool is designed to apply a thickening algorithm to 3D models stored in STL (Stereolithography) format. The primary
@@ -97,7 +100,7 @@ ruff .
 ## Architectural Decisions
 
 - **STL File Format**: We chose to use the STL file format for simplicity and wide support.
-- Refer to the [ADR 001](docs/adrs/001-choosing-stl-file-format.md) for more details.
+- Refer to the [ADR 001](docs/adrs/001-use-stl-files.md) for more details.
 
 ## Contributing
 

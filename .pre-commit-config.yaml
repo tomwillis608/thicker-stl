@@ -6,18 +6,18 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    - id: check-yaml
-    - id: check-toml
-    - id: end-of-file-fixer
-    - id: trailing-whitespace
-    - id: check-added-large-files
-      args: [ --maxkb=500000 ]
-    - id: check-case-conflict
-    - id: check-merge-conflict
-    - id: detect-private-key
-    - id: no-commit-to-branch
-      args: [--branch, main]
-    - id: check-docstring-first
+      - id: check-yaml
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+        args: [--maxkb=500000]
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: no-commit-to-branch
+        args: [--branch, main]
+      - id: check-docstring-first
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.8.2
@@ -31,3 +31,13 @@ repos:
       - id: markdownlint
         args: ["-f"]
         stages: [pre-commit]
+
+  #  - repo: https://github.com/mpalmer/action-validator
+  #    rev: v0.5.1
+  #    hooks:
+  #      - id: action-validator
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
