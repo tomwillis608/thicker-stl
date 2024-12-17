@@ -7,13 +7,26 @@ import numpy as np
 from stl import mesh
 
 
-class Humble_STL_IO:
+def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, ...]]:
+    """
+    Ensure all vertex coordinates are Python float type.
+
+    Args:
+        vertices (List[Tuple]): List of vertices, possibly with NumPy float types.
+
+    Returns:
+        List[Tuple[float, float, float]]: List of vertices with native Python floats.
+    """
+    return [tuple(float(coord) for coord in vertex) for vertex in vertices]
+
+
+class HumbleSTLIO:
     """A humble object to handle STL file operations."""
 
     @staticmethod
     def read(
         file_path: str,
-    ) -> Tuple[List[Tuple[float, float, float]], List[Tuple[int, int, int]]]:
+    ) -> Tuple[List[Tuple[float, ...]], List[Tuple[int, int, int]]]:
         """
         Load an STL file and parse its vertices and faces.
 
@@ -26,6 +39,8 @@ class Humble_STL_IO:
         """
         stl_mesh = mesh.Mesh.from_file(file_path)
         vertices = [(v[0], v[1], v[2]) for v in stl_mesh.vectors.reshape(-1, 3)]
+        # Ensure vertices are Python floats
+        vertices = _convert_to_float(vertices)
         faces = [(i, i + 1, i + 2) for i in range(0, len(vertices), 3)]
         return vertices, faces
 

@@ -1,5 +1,7 @@
 """nox file for the project - automate the development tasks."""
 
+import os
+
 import nox
 
 # Global variables
@@ -50,7 +52,7 @@ def coverage(session):
         "--cov-report=term-missing",  # Show missing lines in the terminal
         "--cov-report=html",  # Generate an HTML coverage report
     )
-    session.log("XML report generated in 'xmlcov/' directory")
+    session.log("HTML report generated in 'htmlcov/' directory")
 
 
 @nox.session(python=["3.11"])
@@ -58,19 +60,21 @@ def coverage_ci(session):
     """
     Run tests and measure code coverage in XML for CI.
     """
+    if os.getenv("CI") == "true":
+        # Install all dev dependencies, including testing tools and numpy
+        session.install("-r", DEV_REQUIREMENTS)
 
-    # Install all dev dependencies, including testing tools and numpy
-    session.install("-r", DEV_REQUIREMENTS)
-
-    # Run pytest with coverage
-    session.run(
-        "pytest",
-        "--cov=thicker",  # Measure coverage for this module/package
-        "--cov-report=term-missing",  # Show missing lines in the terminal
-        "--cov-report=xml",  # Generate an HTML coverage report
-        "--cov-fail-under=100",  # Set your coverage threshold
-    )
-    session.log("HTML report generated in 'htmlcov/' directory")
+        # Run pytest with coverage
+        session.run(
+            "pytest",
+            "--cov=thicker",  # Measure coverage for this module/package
+            "--cov-report=term-missing",  # Show missing lines in the terminal
+            "--cov-report=xml",  # Generate an HTML coverage report
+            "--cov-fail-under=100",  # Set your coverage threshold
+        )
+        session.log("XML report generated in '.' directory")
+    else:
+        session.log("Skipping coverage_ci XML, since we are not running in CI.")
 
 
 @nox.session

@@ -11,7 +11,7 @@ def thicken_a_mesh(original_mesh: Mesh, offset: float) -> Mesh:
     """Shape Thickening use case.
     Apply thickening transformation to a mesh.
     Args:
-        mesh (Mesh): The original mesh to be thickened.
+        original_mesh (Mesh): The original mesh to be thickened.
         offset (float): The amount to thicken each vertex.
 
     Returns:
