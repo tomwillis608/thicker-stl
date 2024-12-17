@@ -19,8 +19,8 @@ repos:
         args: [--branch, main]
       - id: check-docstring-first
 
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.8.2
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.3
     hooks:
       - id: ruff
         args: ["--fix"]
