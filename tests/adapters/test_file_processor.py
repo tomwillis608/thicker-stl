@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 
-from thicker.connectors.file_processor import read_stl_data, write_stl_data
+from thicker.adapters.file_processor import read_stl_data, write_stl_data
 
 
 def test_read_stl_data_with_valid_data():
@@ -10,7 +10,7 @@ def test_read_stl_data_with_valid_data():
     # Arrange: Mock the HumbleSTLIO.read method
 
     with patch(
-        "thicker.connectors.file_processor.HumbleSTLIO.read",
+        "thicker.adapters.file_processor.HumbleSTLIO.read",
         return_value=([(0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (0.0, 1.0, 0.0)], [(0, 1, 2)]),
     ) as mock_load:
         file_path = "test.stl"
@@ -42,7 +42,7 @@ def test_write_stl_data_with_valid_data():
     """Test the connector with valid data to ensure type assertions pass."""
     # Arrange: Mock the HumbleSTLIO.read method
 
-    with patch("thicker.connectors.file_processor.HumbleSTLIO.write") as mock_write:
+    with patch("thicker.adapters.file_processor.HumbleSTLIO.write") as mock_write:
         file_path = "test.stl"
         vertices = [(0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (0.0, 1.0, 0.0)]
         faces = [(0, 1, 2)]
