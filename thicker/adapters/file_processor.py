@@ -1,60 +1,94 @@
 """Connector to read STL files."""
 
+
 from typing import List, Tuple
 
-from thicker.external.humble_stls import HumbleSTLIO
+import numpy as np
+from stl import mesh
 
 
-def read_stl_data(
-    file_path: str,
-) -> Tuple[List[Tuple[float, ...]], List[Tuple[int, int, int]]]:
+def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, ...]]:
     """
-    Process STL data by delegating to the humble object.
+    Ensure all vertex coordinates are Python float type.
 
     Args:
-        file_path (str): Path to the STL file.
+        vertices (List[Tuple]): List of vertices, possibly with NumPy float types.
 
     Returns:
-        Tuple[List[Tuple[float, float, float]],
-            List[Tuple[int, int, int]]]: Processed vertices and faces.
+        List[Tuple[float, float, float]]: List of vertices with native Python floats.
     """
-
-    # Delegate to the humble object to read data
-    vertices, faces = HumbleSTLIO.read(file_path)
-
-    # Type assertions to ensure the data is well-formed
-    assert isinstance(vertices, list), "Vertices must be a list."
-    assert all(
-        isinstance(v, tuple)
-        and len(v) == 3
-        and all(isinstance(coord, (float, int)) for coord in v)
-        for v in vertices
-    ), "Each vertex must have three numeric coordinates."
-    assert isinstance(faces, list), "Faces must be a list."
-    assert all(
-        isinstance(f, tuple) and len(f) == 3 and all(isinstance(idx, int) for idx in f)
-        for f in faces
-    ), "Each face must be a tuple of three integers."
-
-    return vertices, faces
+    return [tuple(float(coord) for coord in vertex) for vertex in vertices]
 
 
-def write_stl_data(
-    file_path: str,
-    vertices: List[Tuple[float, float, float]],
-    faces: List[Tuple[int, int, int]],
-):
-    """
-    Write STL data by delegating to the humble object.
+class STLMeshReader:
+    """A humble object to handle STL file operations."""
 
-    Args:
-        file_path (str): Path to the STL file.
-        vertices (List[Tuple[float, float, float]]): The vertices of the shape.
-        faces (List[Tuple[int, int, int]]): The faces of the shape.
+    @staticmethod
+    def read(
+        file_path: str,
+    ) -> Tuple[List[Tuple[float, ...]], List[Tuple[int, int, int]]]:
+        """
+        Load an STL file and parse its vertices and faces.
 
-    Returns:
-        none
-    """
+        Args:
+            file_path (str): Path to the STL file.
 
-    # Delegate to the humble object to write data
-    HumbleSTLIO.write(file_path, vertices, faces)
+        Returns:
+            Tuple[List[Tuple[float, float, float]],
+                List[Tuple[int, int, int]]]: Parsed vertices and faces.
+        """
+        stl_mesh = mesh.Mesh.from_file(file_path)
+        vertices = [(v[0], v[1], v[2]) for v in stl_mesh.vectors.reshape(-1, 3)]
+        # Ensure vertices are Python floats
+        vertices = _convert_to_float(vertices)
+        faces = [(i, i + 1, i + 2) for i in range(0, len(vertices), 3)]
+
+        # Type assertions to ensure the data is well-formed
+        assert isinstance(vertices, list), "Vertices must be a list."
+        assert all(
+            isinstance(v, tuple)
+            and len(v) == 3
+            and all(isinstance(coord, (float, int)) for coord in v)
+            for v in vertices
+        ), "Each vertex must have three numeric coordinates."
+        assert isinstance(faces, list), "Faces must be a list."
+        assert all(
+            isinstance(f, tuple) and len(f) == 3
+            and all(isinstance(idx, int) for idx in f)
+            for f in faces
+        ), "Each face must be a tuple of three integers."
+
+        return vertices, faces
+
+class STLMeshWriter:
+    """A humble object to handle STL file operations."""
+    @staticmethod
+    def write(
+        output_path: str,
+        vertices: List[Tuple[float, float, float]],
+        faces: List[Tuple[int, int, int]],
+    ):
+        """
+        Save an STL file from vertices and faces.
+
+        Args:
+            output_path (str): Path to the STL file to create.
+            vertices (List[Tuple[float, float, float]]): The vertices in the shape.
+            faces (List[Tuple[int, int, int]]): The paces made of vertices in the shape.
+
+        Returns:
+            None
+        """
+
+        # Convert regular lists to np.arrays
+        vertices = np.array(vertices)
+        faces = np.array(faces)
+
+        # Create the mesh object
+        new_mesh = mesh.Mesh(np.zeros(faces.shape[0], dtype=mesh.Mesh.dtype))
+        for i, face in enumerate(faces):
+            for j in range(3):
+                new_mesh.vectors[i][j] = vertices[face[j], :]
+
+        # Save the mesh to a file
+        new_mesh.save(output_path)
