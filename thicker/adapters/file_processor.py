@@ -7,7 +7,7 @@ import numpy as np
 from stl import mesh
 
 
-def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, ...]]:
+def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, float, float]]:
     """
     Ensure all vertex coordinates are Python float type.
 
@@ -17,7 +17,8 @@ def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, ...]]:
     Returns:
         List[Tuple[float, float, float]]: List of vertices with native Python floats.
     """
-    return [tuple(float(coord) for coord in vertex) for vertex in vertices]
+    return [tuple(float(vertex[0]), float(vertex[1]), float(vertex[2]))
+            for vertex in vertices]
 
 
 class STLMeshReader:
@@ -26,7 +27,7 @@ class STLMeshReader:
     @staticmethod
     def read(
         file_path: str,
-    ) -> Tuple[List[Tuple[float, ...]], List[Tuple[int, int, int]]]:
+    ) -> Tuple[List[Tuple[float, float, float]], List[Tuple[int, int, int]]]:
         """
         Load an STL file and parse its vertices and faces.
 
