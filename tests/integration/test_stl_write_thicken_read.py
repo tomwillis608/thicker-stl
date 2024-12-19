@@ -1,7 +1,10 @@
 """Test STL round trip with transformation."""
 
-from thicker.connectors.file_processor import read_stl_data, write_stl_data
+from thicker.adapters.stl_mesh_reader import STLMeshReader
+from thicker.adapters.stl_mesh_writer import STLMeshWriter
 from thicker.domain.mesh import Mesh
+from thicker.interfaces.mesh_reader import MeshReader
+from thicker.interfaces.mesh_writer import MeshWriter
 from thicker.use_cases.thicken_mesh import thicken_a_mesh
 
 
@@ -10,18 +13,17 @@ def test_read_thicken_write(tmpdir):
     # Arrange: Create a simple test STL file
     input_stl_path = "tests/fixtures/test_cylinder.stl"
     output_stl_path = tmpdir / "output.stl"
+    reader: MeshReader = STLMeshReader()
+    writer: MeshWriter = STLMeshWriter()
+    offset = 0.5
 
     # Act: Read, transform, and write the STL
-    input_vertices, input_faces = read_stl_data(file_path=input_stl_path)
-    input_mesh = Mesh(input_vertices, input_faces)
-    thickened_mesh = thicken_a_mesh(original_mesh=input_mesh, offset=0.5)
-    write_stl_data(
-        file_path=output_stl_path,
-        vertices=thickened_mesh.vertices,
-        faces=thickened_mesh.faces,
-    )
+    vertices, faces = reader.read(input_stl_path)
+    mesh = Mesh(vertices=vertices, faces=faces)
+    thickened_mesh = thicken_a_mesh(mesh, offset)
+    writer.write(output_stl_path, thickened_mesh.vertices, thickened_mesh.faces)
 
     # Assert: Verify that the output STL is valid
-    written_vertices, written_faces = read_stl_data(output_stl_path)
+    written_vertices, written_faces = reader.read(output_stl_path)
     assert len(written_vertices) == len(thickened_mesh.vertices)
     assert len(written_faces) == len(thickened_mesh.faces)
