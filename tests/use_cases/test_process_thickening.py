@@ -1,4 +1,4 @@
-""" Test the process_thickening use case method. """
+"""Test the process_thickening use case method."""
 
 from unittest.mock import Mock
 
@@ -13,7 +13,7 @@ def test_process_thickening():
     # Mock input data
     mock_reader.read.return_value = (
         [(0.0, 0.0, 1.0), (1.0, 0.0, 0.0), (0.0, 1.0, 0.0)],
-        [(0, 1, 2)]
+        [(0, 1, 2)],
     )
     mock_writer.write.return_value = None
 

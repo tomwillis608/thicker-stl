@@ -1,6 +1,7 @@
 """Test STL round trip with transformation."""
 
-from thicker.adapters.file_processor import STLMeshReader, STLMeshWriter
+from thicker.adapters.stl_mesh_reader import STLMeshReader
+from thicker.adapters.stl_mesh_writer import STLMeshWriter
 from thicker.domain.mesh import Mesh
 from thicker.interfaces.mesh_reader import MeshReader
 from thicker.interfaces.mesh_writer import MeshWriter

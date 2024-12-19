@@ -23,13 +23,12 @@ def thicken_a_mesh(original_mesh: Mesh, offset: float) -> Mesh:
     return new_mesh
 
 
-
 def process_thickening(
     reader: MeshReader,
     writer: MeshWriter,
     input_path: str,
     output_path: str,
-    offset: float
+    offset: float,
 ) -> None:
     """
     Use case: Read a mesh, apply thickening, and save it.
