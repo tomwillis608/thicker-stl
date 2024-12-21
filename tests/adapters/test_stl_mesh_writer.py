@@ -1,6 +1,5 @@
 """Test the file processor."""
 
-
 from thicker.adapters.stl_mesh_writer import STLMeshWriter
 
 

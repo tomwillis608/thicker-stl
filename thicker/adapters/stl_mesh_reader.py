@@ -15,8 +15,9 @@ def _convert_to_float(vertices: List[Tuple]) -> List[Tuple[float, float, float]]
     Returns:
         List[Tuple[float, float, float]]: List of vertices with native Python floats.
     """
-    return [ (float(vertex[0]), float(vertex[1]), float(vertex[2]))
-             for vertex in vertices ]
+    return [
+        (float(vertex[0]), float(vertex[1]), float(vertex[2])) for vertex in vertices
+    ]
 
 
 class STLMeshReader:
