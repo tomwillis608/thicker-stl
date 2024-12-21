@@ -45,9 +45,19 @@ To get started, you need Python 3.10 or higher installed on your system.
    pip install -r requirements.txt
    ```
 
+4. Install CLI Locally: Run the following command to install the package in editable mode (if you are using pip):
+
+   ```bash
+   pip install -e .
+   ```
+
 ## Usage
 
 Once the tool is installed, you can use the command-line interface to process STL files.
+
+```bash
+thicker-stl --input input.stl --output output.stl --offset 0.1
+```
 
 ### Example
 

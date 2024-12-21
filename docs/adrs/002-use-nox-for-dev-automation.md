@@ -1,6 +1,7 @@
 # Architectural Decision Record:  Use Nox for Developer Automation
 
 ## Status
+
 Accepted
 
 ## Context
@@ -13,7 +14,8 @@ The process for generating the requirements files should be automated to minimiz
 
 ## Decision
 
-We will use Nox to automate the process of generating requirements.txt and requirements-dev.txt files from the .in files. The pip-tools package will be used within Nox sessions to compile these files.
+We will use Nox to automate the process of generating requirements.txt and requirements-dev.txt files from the .in
+files. The pip-tools package will be used within Nox sessions to compile these files.
 
 - requirements.in will include production dependencies.
 - requirements-dev.in will include both production dependencies (via -r requirements.in) and development dependencies.
@@ -25,4 +27,5 @@ We will also use Nox to automate the other developer build processes
 
 Developers must use the Nox sessions to generate or update the requirements files.
 Dependencies will be version-locked using pip-tools, ensuring that the environment is reproducible.
-The process for updating and installing dependencies is centralized and automated, reducing the risk of mismatched or forgotten dependencies.
+The process for updating and installing dependencies is centralized and automated, reducing the risk of mismatched or
+forgotten dependencies.
