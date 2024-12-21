@@ -167,11 +167,11 @@ def test_main_input_file_not_found(mocker):
     )
 
     # Run the CLI and ensure it raises the appropriate error
-    with pytest.raises(SystemExit) as excinfo:
+    with pytest.raises(SystemExit) as exec_info_:
         main()
 
     # Assert that the CLI exits with code 2
-    assert excinfo.value.code == 2
+    assert exec_info_.value.code == 2
 
     # Verify process_thickening was called once
     mock_process.assert_called_once_with(
@@ -215,11 +215,11 @@ def test_main_unexpected_exception(mocker):
     )
 
     # Run the CLI and ensure it raises the appropriate error
-    with pytest.raises(SystemExit) as excinfo:
+    with pytest.raises(SystemExit) as exec_info_:
         main()
 
     # Assert that the CLI exits with code 2
-    assert excinfo.value.code == 1
+    assert exec_info_.value.code == 1
 
     # Verify process_thickening was called once
     mock_process.assert_called_once_with(
