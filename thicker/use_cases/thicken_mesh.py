@@ -4,7 +4,11 @@
 """
 
 from thicker.domain.mesh import Mesh
-from thicker.domain.transformations import calculate_spherical_normal, thicken_mesh
+from thicker.domain.transformations import (
+    calculate_cylindrical_normal,
+    calculate_spherical_normal,
+    thicken_mesh,
+)
 from thicker.interfaces.mesh_reader import MeshReader
 from thicker.interfaces.mesh_writer import MeshWriter
 
@@ -39,7 +43,7 @@ def process_thickening(
 
     # Domain logic: Perform thickening
     mesh = Mesh(vertices=vertices, faces=faces)
-    thickened_mesh = thicken_mesh(mesh, offset, calculate_spherical_normal)
+    thickened_mesh = thicken_mesh(mesh, offset, calculate_cylindrical_normal)
 
     # Write the thickened mesh
     writer.write(output_path, thickened_mesh.vertices, thickened_mesh.faces)

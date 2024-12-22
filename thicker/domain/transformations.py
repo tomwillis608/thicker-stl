@@ -29,6 +29,23 @@ def calculate_spherical_normal(
     return (x / norm, y / norm, z / norm) if norm != 0 else (0, 0, 0)
 
 
+def calculate_cylindrical_normal(
+    vertex: Tuple[float, float, float],
+) -> Tuple[float, float, float]:
+    """
+    Calculate the normal vector for a vertex in cylindrical coordinates.
+
+    Args:
+        vertex (Tuple[float, float, float]): The vertex coordinates (x, y, z).
+
+    Returns:
+        Tuple[float, float, float]: The normal vector (nx, ny, 0).
+    """
+    x, y, _ = vertex
+    norm = np.linalg.norm([x, y])
+    return (x / norm, y / norm, 0) if norm != 0 else (0, 0, 0)
+
+
 def thicken_mesh(
     mesh: Mesh,
     offset: float,
