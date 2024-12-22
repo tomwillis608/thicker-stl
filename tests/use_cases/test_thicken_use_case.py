@@ -6,7 +6,7 @@ from thicker.domain.mesh import Mesh
 from thicker.use_cases.thicken_mesh import thicken_a_mesh
 
 
-def test_thicken_mesh_use_case():
+def test_thicken_mesh_use_case(mocker):
     """Simple test of thicken_a_mesh()."""
     # Mock data
     original_mesh = Mesh(vertices=[(1, 0, 0), (0, 1, 0), (0, 0, 1)], faces=[(0, 1, 2)])
@@ -15,6 +15,9 @@ def test_thicken_mesh_use_case():
     )
     offset = 0.1
 
+    mock_normal = mocker.patch(
+        "thicker.use_cases.thicken_mesh.calculate_spherical_normal"
+    )
     # Mock the domain function
     with patch(
         "thicker.use_cases.thicken_mesh.thicken_mesh", return_value=thickened_mesh
@@ -28,4 +31,4 @@ def test_thicken_mesh_use_case():
         assert result == thickened_mesh
 
         # # Verify that the domain function was called with the correct arguments
-        mock_thicken.assert_called_once_with(original_mesh, offset)
+        mock_thicken.assert_called_once_with(original_mesh, offset, mock_normal)
