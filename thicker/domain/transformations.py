@@ -1,5 +1,6 @@
 """Mesh transformations."""
 
+from math import sqrt
 from typing import Callable, Tuple
 
 import numpy as np
@@ -77,3 +78,61 @@ def thicken_mesh(
 
     # Return a new Mesh instance with updated vertices
     return Mesh(vertices=new_vertices, faces=mesh.faces)
+
+
+class HemisphereToppedCylinderTransformation:
+    """
+    Transformation to apply a hemisphere-topped cylinder shape to a mesh.
+    """
+
+    def __init__(self, cylinder_height: float, radius: float):
+        """
+        Initialize the transformation.
+
+        Args:
+            cylinder_height (float): Height of the cylindrical region.
+            radius (float): Radius of the cylinder and hemisphere.
+        """
+        self.cylinder_height = cylinder_height
+        self.radius = radius
+
+    def transform(self, mesh: Mesh) -> Mesh:
+        """
+        Transform the vertices of a mesh.
+
+        Args:
+            mesh (Mesh): The mesh to transform.
+
+        Returns:
+            Mesh: A new mesh with transformed vertices and unchanged faces.
+        """
+        transformed_vertices = [self._transform_vertex(v) for v in mesh.vertices]
+        return Mesh(vertices=transformed_vertices, faces=mesh.faces)
+
+    def _transform_vertex(self, vertex):
+        """
+        Transform a single vertex based on the hemisphere-topped cylinder logic.
+
+        Args:
+            vertex (Tuple[float, float, float]): The vertex to transform.
+
+        Returns:
+            Tuple[float, float, float]: Transformed vertex coordinates.
+        """
+        x, y, z = vertex
+        radius = sqrt(x**2 + y**2)
+
+        if z <= self.cylinder_height:
+            # Cylindrical region: project x, y onto cylinder surface
+            if radius == 0:
+                return (0, 0, z)  # Handle center point case
+            scale = self.radius / radius
+            return (x * scale, y * scale, z)
+        else:
+            # Hemisphere region: normalize and scale to radius
+            norm = sqrt(x**2 + y**2 + z**2)
+            return (
+                x / norm * self.radius,
+                y / norm * self.radius,
+                z / norm * self.radius,
+            )
