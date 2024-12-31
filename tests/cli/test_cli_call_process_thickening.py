@@ -7,9 +7,9 @@ from thicker.cli.cli import main
 
 
 def test_cli_calls_process_thickening(mocker):
-    """Test that the CLI correctly calls the process_thickening
+    """Test that the CLI correctly calls the process_thickening_ori
     use case with arguments."""
-    # Arrange: Mock the process_thickening function
+    # Arrange: Mock the process_thickening_ori function
     mock_process_thickening = MagicMock()
     test_args = [
         "thicker",
@@ -23,7 +23,7 @@ def test_cli_calls_process_thickening(mocker):
     expected_input_file = "input.stl"
     expected_output_file = "output.stl"
     expected_offset = 0.1
-    # Mock the dependencies passed to process_thickening
+    # Mock the dependencies passed to process_thickening_ori
     mock_reader = mocker.Mock(name="MockMeshReader")
     mock_writer = mocker.Mock(name="MockMeshWriter")
     _mock_reader_cls = mocker.patch(
@@ -37,7 +37,7 @@ def test_cli_calls_process_thickening(mocker):
             # Act: Call the CLI main function
             main()
 
-    # Assert: Check that process_thickening was called with the correct arguments
+    # Assert: Check that process_thickening_ori was called with the correct arguments
     mock_process_thickening.assert_called_once_with(
         mock_reader,
         mock_writer,

@@ -1,6 +1,5 @@
 """Mesh transformations."""
 
-
 from typing import Callable, Tuple
 
 import numpy as np
@@ -80,7 +79,7 @@ def thicken_mesh(
     return Mesh(vertices=new_vertices, faces=mesh.faces)
 
 
-class HemisphereToppedCylinderTransformation:
+class HemisphericalCylinderTransformation:
     """
     Transformation to apply a hemisphere-topped cylinder shape to a mesh.
     """
@@ -108,12 +107,14 @@ class HemisphereToppedCylinderTransformation:
         Returns:
             Mesh: A new mesh with transformed vertices and unchanged faces.
         """
-        transformed_vertices = [self._transform_vertex(v, offset)
-                                for v in mesh.vertices]
+        transformed_vertices = [
+            self._transform_vertex(v, offset) for v in mesh.vertices
+        ]
         return Mesh(vertices=transformed_vertices, faces=mesh.faces)
 
-    def _transform_vertex(self, vertex: Tuple[float, float, float], offset: float) -> \
-            Tuple[float, float, float]:
+    def _transform_vertex(
+        self, vertex: Tuple[float, float, float], offset: float
+    ) -> Tuple[float, float, float]:
         """
         Transform a single vertex based on the hemisphere-topped cylinder logic.
 
@@ -133,7 +134,6 @@ class HemisphereToppedCylinderTransformation:
         return transformed_vertex
 
     def calculate_normal(self, vertex: tuple) -> tuple:
-
         """
         Calculate the normal vector for a vertex in the context of a
         hemisphere-topped cylinder transformation.
@@ -188,5 +188,8 @@ class HemisphereToppedCylinderTransformation:
             center = (0, 0, self.cylinder_height)
             vector = (x - center[0], y - center[1], z - center[2])
             norm = np.linalg.norm(vector)
-            return (vector[0] / norm, vector[1] / norm, vector[2] / norm) \
-                if norm != 0 else (0, 0, 0)
+            return (
+                (vector[0] / norm, vector[1] / norm, vector[2] / norm)
+                if norm != 0
+                else (0, 0, 0)
+            )

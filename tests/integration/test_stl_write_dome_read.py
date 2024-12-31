@@ -1,11 +1,11 @@
-""" Integration tests for domed cylinder transformation from fixtures. """
+"""Integration tests for domed cylinder transformation from fixtures."""
 
 import math
 
 from thicker.adapters.stl_mesh_reader import STLMeshReader
 from thicker.adapters.stl_mesh_writer import STLMeshWriter
 from thicker.domain.mesh import Mesh
-from thicker.domain.transformations import HemisphereToppedCylinderTransformation
+from thicker.domain.transformations import HemisphericalCylinderTransformation
 from thicker.interfaces.mesh_reader import MeshReader
 from thicker.interfaces.mesh_writer import MeshWriter
 
@@ -13,7 +13,7 @@ from thicker.interfaces.mesh_writer import MeshWriter
 def test_cylindrical_model_transformation_read_write(tmpdir):
     """
     Test end-to-end STL processing: read, transform, and write.
-    Verify the HemisphereToppedCylinderTransformation on a cylindrical test model.
+    Verify the HemisphericalCylinderTransformation on a cylindrical test model.
     """
     # Arrange: Create a simple test STL file
     input_stl_path = "tests/fixtures/test_cylinder.stl"
@@ -23,7 +23,7 @@ def test_cylindrical_model_transformation_read_write(tmpdir):
     reader: MeshReader = STLMeshReader()
     writer: MeshWriter = STLMeshWriter()
     # Define transformation parameters
-    cylinder_height = 5.0 # center dome at height of 5 of 10
+    cylinder_height = 5.0  # center dome at height of 5 of 10
     radius = 5.0
     offset = 1.0
 
@@ -31,7 +31,7 @@ def test_cylindrical_model_transformation_read_write(tmpdir):
     vertices, faces = reader.read(input_stl_path)
     mesh = Mesh(vertices=vertices, faces=faces)
     # Apply the transformation
-    transformation = HemisphereToppedCylinderTransformation(cylinder_height, radius)
+    transformation = HemisphericalCylinderTransformation(cylinder_height, radius)
     transformed_mesh = transformation.transform(mesh, offset)
     writer.write(output_stl_path, transformed_mesh.vertices, transformed_mesh.faces)
 
@@ -41,8 +41,9 @@ def test_cylindrical_model_transformation_read_write(tmpdir):
     assert len(written_faces) == len(transformed_mesh.faces)
 
     # Assertions
-    for original_vertex, transformed_vertex in zip(mesh.vertices,
-                                                   transformed_mesh.vertices):
+    for original_vertex, transformed_vertex in zip(
+        mesh.vertices, transformed_mesh.vertices
+    ):
         # Calculate the normal for the original vertex
         normal = transformation.calculate_normal(original_vertex)
 
@@ -62,7 +63,7 @@ def test_cylindrical_model_transformation_read_write(tmpdir):
 def test_cube_model_transformation_read_write(tmpdir):
     """
     Test end-to-end STL processing: read, transform, and write.
-    Verify the HemisphereToppedCylinderTransformation on a cylindrical test model.
+    Verify the HemisphericalCylinderTransformation on a cylindrical test model.
     """
     # Arrange: Create a simple test STL file
     input_stl_path = "tests/fixtures/test_cube.stl"
@@ -71,15 +72,15 @@ def test_cube_model_transformation_read_write(tmpdir):
     reader: MeshReader = STLMeshReader()
     writer: MeshWriter = STLMeshWriter()
     # Define transformation parameters
-    cylinder_height = .375
-    radius= .5
+    cylinder_height = 0.375
+    radius = 0.5
     offset = 0.5
 
     # Act: Read, transform, and write the STL
     vertices, faces = reader.read(input_stl_path)
     mesh = Mesh(vertices=vertices, faces=faces)
     # Apply the transformation
-    transformation = HemisphereToppedCylinderTransformation(cylinder_height, radius)
+    transformation = HemisphericalCylinderTransformation(cylinder_height, radius)
     transformed_mesh = transformation.transform(mesh, offset)
     writer.write(output_stl_path, transformed_mesh.vertices, transformed_mesh.faces)
 
@@ -89,8 +90,9 @@ def test_cube_model_transformation_read_write(tmpdir):
     assert len(written_faces) == len(transformed_mesh.faces)
 
     # Assertions
-    for original_vertex, transformed_vertex in zip(mesh.vertices,
-                                                   transformed_mesh.vertices):
+    for original_vertex, transformed_vertex in zip(
+        mesh.vertices, transformed_mesh.vertices
+    ):
         # Calculate the normal for the original vertex
         normal = transformation.calculate_normal(original_vertex)
 
