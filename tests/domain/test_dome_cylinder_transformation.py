@@ -60,6 +60,16 @@ def test_transform_cylindrical_vertex(transformation):
         transformed_mesh.vertices[0], expected_vertex
     ), f"Expected {expected_vertex}, got {transformed_mesh.vertices[0]}"
 
+def test_transform_cylindrical_vertex_negative_offset(transformation):
+    vertex = (3, 4, 5)  # Cylindrical vertex
+    offset = -2
+    transformed_mesh = transformation.transform(Mesh(vertices=[vertex],
+                                                     faces=[]), offset)
+    expected_vertex = (3 - 2 * 3 / 5, 4 - 2 * 4 / 5, 5)  # Offset inward along normal
+    assert np.allclose(
+        transformed_mesh.vertices[0], expected_vertex
+    ), f"Expected {expected_vertex}, got {transformed_mesh.vertices[0]}"
+
 def test_transform_hemispherical_vertex_top(transformation):
     vertex = (0, 0, 12)  # Top of hemisphere
     offset = 2
