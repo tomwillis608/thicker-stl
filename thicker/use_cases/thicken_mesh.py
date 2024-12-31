@@ -86,11 +86,11 @@ def calculate_mesh_radius(mesh: Mesh) -> float:
     if not mesh.vertices:
         raise ValueError("Mesh contains no vertices.")
 
-    # Compute distances from the z-axis for each vertex
-    distances = [(x**2 + y**2) ** 0.5 for x, y, _ in mesh.vertices]
+    # Compute squared distances from the z-axis for each vertex
+    squared_distances = [x**2 + y**2 for x, y, _ in mesh.vertices]
 
-    # Return the maximum distance as the radius
-    return max(distances)
+    # Return the square root of the maximum squared distance as the radius
+    return max(squared_distances) ** 0.5
 
 
 def process_thickening(
