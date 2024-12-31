@@ -5,6 +5,7 @@
 
 from thicker.domain.mesh import Mesh
 from thicker.domain.transformations import (
+    HemisphereToppedCylinderTransformation,
     calculate_cylindrical_normal,
     calculate_spherical_normal,
     thicken_mesh,
@@ -44,6 +45,31 @@ def process_thickening(
     # Domain logic: Perform thickening
     mesh = Mesh(vertices=vertices, faces=faces)
     thickened_mesh = thicken_mesh(mesh, offset, calculate_cylindrical_normal)
+
+    # Write the thickened mesh
+    writer.write(output_path, thickened_mesh.vertices, thickened_mesh.faces)
+
+def process_thickening_2(
+    reader: MeshReader,
+    writer: MeshWriter,
+    input_path: str,
+    output_path: str,
+    height: float,
+    radius: float,
+    offset: float,
+) -> None:
+    """
+    Use case: Read a mesh, apply thickening, and save it.
+    As called by the CLI connector.
+    """
+    # Read the input mesh
+    vertices, faces = reader.read(input_path)
+
+    # Domain: setup transformation
+    transformation = HemisphereToppedCylinderTransformation(height, radius)
+    # Domain logic: Perform thickening
+    mesh = Mesh(vertices=vertices, faces=faces)
+    thickened_mesh = transformation.transform(mesh, offset)
 
     # Write the thickened mesh
     writer.write(output_path, thickened_mesh.vertices, thickened_mesh.faces)
