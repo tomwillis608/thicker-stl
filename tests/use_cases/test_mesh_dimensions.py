@@ -60,6 +60,13 @@ def test_calculate_radius_empty_mesh():
         _ = calculate_mesh_radius(empty_mesh)
 
 
+def test_calculate_height_empty_mesh():
+    """Test radius calculation with an empty mesh."""
+    empty_mesh = Mesh(vertices=[], faces=[])
+    with pytest.raises(ValueError):
+        _ = calculate_mesh_height(empty_mesh)
+
+
 
 def test_calculate_radius_origin_mesh():
     """Test radius calculation with all vertices at origin."""
