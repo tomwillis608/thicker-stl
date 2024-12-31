@@ -67,9 +67,7 @@ def calculate_mesh_height(mesh: Mesh) -> float:
     # Extract the z-coordinates from the vertices
     z_coordinates = [vertex[2] for vertex in mesh.vertices]
 
-    # Calculate the height as the range of z-coordinates
-    height = max(z_coordinates) - min(z_coordinates)
-    return height
+    return max(z_coordinates) - min(z_coordinates)
 
 
 def calculate_mesh_radius(mesh: Mesh) -> float:
