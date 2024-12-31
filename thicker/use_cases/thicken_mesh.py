@@ -5,6 +5,7 @@
 
 from thicker.domain.mesh import Mesh
 from thicker.domain.transformations import (
+    HemisphericalCylinderTransformation,
     calculate_cylindrical_normal,
     calculate_spherical_normal,
     thicken_mesh,
@@ -27,7 +28,7 @@ def thicken_a_mesh(original_mesh: Mesh, offset: float) -> Mesh:
     return new_mesh
 
 
-def process_thickening(
+def process_thickening_ori(
     reader: MeshReader,
     writer: MeshWriter,
     input_path: str,
@@ -44,6 +45,79 @@ def process_thickening(
     # Domain logic: Perform thickening
     mesh = Mesh(vertices=vertices, faces=faces)
     thickened_mesh = thicken_mesh(mesh, offset, calculate_cylindrical_normal)
+
+    # Write the thickened mesh
+    writer.write(output_path, thickened_mesh.vertices, thickened_mesh.faces)
+
+
+def calculate_mesh_height(mesh: Mesh) -> float:
+    """
+    Calculate the height of a given mesh based on its vertices.
+
+    Args:
+        mesh: A Mesh object containing vertices and faces.
+
+    Returns:
+        float: The height of the mesh, defined as the difference between the
+               maximum and minimum z-coordinate values.
+    """
+    if not mesh.vertices:
+        raise ValueError("Mesh contains no vertices.")
+
+    # Extract the z-coordinates from the vertices
+    z_coordinates = [vertex[2] for vertex in mesh.vertices]
+
+    return max(z_coordinates) - min(z_coordinates)
+
+
+def calculate_mesh_radius(mesh: Mesh) -> float:
+    """
+    Calculate the radius of a given mesh based on its vertices.
+
+    Args:
+        mesh: A Mesh object containing vertices and faces.
+
+    Returns:
+        float: The radius of the mesh, defined as the maximum distance from
+               the z-axis (0, 0) to any vertex in the x-y plane.
+    """
+    if not mesh.vertices:
+        raise ValueError("Mesh contains no vertices.")
+
+    # Compute squared distances from the z-axis for each vertex
+    squared_distances = [x**2 + y**2 for x, y, _ in mesh.vertices]
+
+    # Return the square root of the maximum squared distance as the radius
+    return max(squared_distances) ** 0.5
+
+
+def process_thickening(
+    reader: MeshReader,
+    writer: MeshWriter,
+    input_path: str,
+    output_path: str,
+    offset: float,
+) -> None:
+    """
+    Use case: Read a mesh, apply thickening, and save it.
+    As called by the CLI connector.
+    """
+    # Read the input mesh
+    vertices, faces = reader.read(input_path)
+    # Domain: create the mesh
+    mesh = Mesh(vertices=vertices, faces=faces)
+    # Use case: calculate mesh dimensions
+    mesh_height = calculate_mesh_height(mesh)
+    print(f"Mesh height: {mesh_height}")
+    mesh_radius = calculate_mesh_radius(mesh)
+    print(f"Mesh radius: {mesh_radius}")
+    cylinder_height = mesh_height - mesh_radius
+    print(f"Cylinder height: {cylinder_height}")
+    # Domain: setup transformation
+    transformation = HemisphericalCylinderTransformation(cylinder_height, mesh_radius)
+    # Domain logic: Perform thickening
+
+    thickened_mesh = transformation.transform(mesh, offset)
 
     # Write the thickened mesh
     writer.write(output_path, thickened_mesh.vertices, thickened_mesh.faces)

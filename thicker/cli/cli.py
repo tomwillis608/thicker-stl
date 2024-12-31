@@ -44,7 +44,7 @@ def parse_arguments():
 def main():
     """
     Entry point for the CLI. Parses arguments and delegates to the
-    process_thickening use case.
+    process_thickening_ori use case.
 
     Raises:
         ValueError: If any argument validation fails.
