@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The `HemisphereToppedCylinderTransformation` requires height and radius parameters to perform its calculations. These
+The `HemisphericalCylinderTransformation` requires height and radius parameters to perform its calculations. These
 parameters could logically be part of either:
 
 - **Domain Layer:** As properties of the `Mesh` object, directly computed from its vertices.

@@ -2,8 +2,9 @@ import numpy as np
 from stl import mesh
 
 
-def generate_vertices_with_rings(radius, height, radial_segments,
-                                 height_segments, cap_resolution):
+def generate_vertices_with_rings(
+    radius, height, radial_segments, height_segments, cap_resolution
+):
     """Generate vertices for a cylindrical mesh with concentric ring caps."""
     vertices = []
 
@@ -46,8 +47,17 @@ def generate_vertices_with_rings(radius, height, radial_segments,
 
     return vertices, bottom_center_index, top_center_index
 
-def generate_faces(radius, height, radial_segments, height_segments,
-                   cap_resolution, vertices, bottom_center_index, top_center_index):
+
+def generate_faces(
+    radius,
+    height,
+    radial_segments,
+    height_segments,
+    cap_resolution,
+    vertices,
+    bottom_center_index,
+    top_center_index,
+):
     """Generate faces for a cylindrical mesh with concentric ring caps."""
     faces = []
 
@@ -84,8 +94,9 @@ def generate_faces(radius, height, radial_segments, height_segments,
         faces.append((v0, v1, bottom_center_index))
 
     # Top cap faces
-    base_index = radial_segments * (height_segments + 1) + \
-                 radial_segments * cap_resolution
+    base_index = (
+        radial_segments * (height_segments + 1) + radial_segments * cap_resolution
+    )
     for r in range(cap_resolution - 1):
         ring_start = base_index + r * radial_segments
         next_ring_start = base_index + (r + 1) * radial_segments
@@ -107,6 +118,7 @@ def generate_faces(radius, height, radial_segments, height_segments,
 
     return faces
 
+
 def save_to_stl(vertices, faces, filename):
     """Save vertices and faces to an STL file."""
     stl_mesh = mesh.Mesh(np.zeros(len(faces), dtype=mesh.Mesh.dtype))
@@ -117,17 +129,26 @@ def save_to_stl(vertices, faces, filename):
     stl_mesh.save(filename)
     print(f"STL file saved as {filename}")
 
-def create_test_stl(radius, height, radial_segments, height_segments,
-                    cap_resolution, filename):
+
+def create_test_stl(
+    radius, height, radial_segments, height_segments, cap_resolution, filename
+):
     """Create a test STL file for a capped cylinder with concentric rings."""
     vertices, bottom_center_index, top_center_index = generate_vertices_with_rings(
         radius, height, radial_segments, height_segments, cap_resolution
     )
     faces = generate_faces(
-        radius, height, radial_segments, height_segments, cap_resolution, vertices,
-        bottom_center_index, top_center_index
+        radius,
+        height,
+        radial_segments,
+        height_segments,
+        cap_resolution,
+        vertices,
+        bottom_center_index,
+        top_center_index,
     )
     save_to_stl(vertices, faces, filename)
+
 
 # Parameters for the test STL
 RADIUS = 5.0
@@ -139,5 +160,6 @@ FILENAME = "capped_cylinder_with_rings.stl"
 
 if __name__ == "__main__":  # pragma: no cover
     # Generate and save the STL
-    create_test_stl(RADIUS, HEIGHT, RADIAL_SEGMENTS,
-                    HEIGHT_SEGMENTS, CAP_RESOLUTION, FILENAME)
+    create_test_stl(
+        RADIUS, HEIGHT, RADIAL_SEGMENTS, HEIGHT_SEGMENTS, CAP_RESOLUTION, FILENAME
+    )

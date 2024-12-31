@@ -1,4 +1,4 @@
-""" Generate a cube STL file for testing. """
+"""Generate a cube STL file for testing."""
 
 import numpy as np
 from stl import mesh
