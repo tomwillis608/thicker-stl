@@ -56,8 +56,9 @@ def test_calculate_radius():
 def test_calculate_radius_empty_mesh():
     """Test radius calculation with an empty mesh."""
     empty_mesh = Mesh(vertices=[], faces=[])
-    radius = calculate_mesh_radius(empty_mesh)
-    assert radius == 0, "Expected radius of empty mesh to be 0"
+    with pytest.raises(ValueError):
+        _ = calculate_mesh_radius(empty_mesh)
+
 
 
 def test_calculate_radius_origin_mesh():
