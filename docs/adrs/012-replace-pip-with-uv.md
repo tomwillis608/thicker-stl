@@ -39,7 +39,7 @@ We will migrate our project to use `uv` for dependency management and task runni
 
     ```bash
         uv add -r requirements.in
-        uv add --dev requirement-dev.in
+        uv add --dev requirements-dev.in
     ```
 
 1. **Add dependencies using `uv`:**
