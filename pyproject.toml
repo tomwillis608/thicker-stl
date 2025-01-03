@@ -1,11 +1,17 @@
 [project]
 name = "thicker-stl"
-version = "0.1.0"
+version = "0.1.1"
 description = "A CLI tool for STL thickening."
 authors = [{ name = "Tom Willis", email = "your.email@example.com" }]
 license = { file = "MIT" }
-dependencies = ["numpy", "numpy-stl",]
+dependencies = [
+    "numpy>=2.2.1",
+    "numpy-stl",
+]
 requires-python = ">= 3.11"
+
+[tool.uv]
+package = true
 
 [project.scripts]
 thicker-stl = "thicker.cli.cli:main"
@@ -78,3 +84,16 @@ docstring-code-format = false
 # This only has an effect when the `docstring-code-format` setting is
 # enabled.
 docstring-code-line-length = "dynamic"
+
+[dependency-groups]
+dev = [
+    "nox>=2024.10.9",
+    "numpy>=2.2.1",
+    "numpy-stl>=3.2.0",
+    "pre-commit>=4.0.1",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-mock>=3.14.0",
+    "pytest-randomly>=3.16.0",
+    "ruff>=0.8.5",
+]
