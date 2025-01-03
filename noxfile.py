@@ -15,14 +15,18 @@ def generate_requirements(session):
     This session generates the production and development requirements.txt
     files from the requirements.in files using pip-tools.
     """
-    # Install pip-tools in the virtual environment
-    session.install("pip-tools")
+    # Install uv in the virtual environment
+    session.install("uv")
 
     # Generate the production requirements.txt
-    session.run("pip-compile", "requirements.in", "--output-file", "requirements.txt")
+    session.run(
+        "uv", "pip", "compile", "requirements.in", "--output-file", "requirements.txt"
+    )
 
     # Generate the development requirements.txt, including production dependencies
-    session.run("pip-compile", "requirements-dev.in", "--output-file", DEV_REQUIREMENTS)
+    session.run(
+        "uv", "pip", "compile", "requirements-dev.in", "--output-file", DEV_REQUIREMENTS
+    )
 
 
 @nox.session
@@ -35,7 +39,6 @@ def install_dependencies(session):
     session.install("-r", DEV_REQUIREMENTS)
 
 
-# @nox.session(python=["3.10", "3.11"])
 @nox.session(python=["3.11"])
 def coverage(session):
     """

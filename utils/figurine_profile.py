@@ -1,6 +1,7 @@
-""" Profile some figures to study base thickness.
-    Use only figures with licences that allow them to be included
-    in the data folder. """
+"""Profile some figures to study base thickness.
+Use only figures with licences that allow them to be included
+in the data folder."""
+
 import csv
 import os
 
@@ -24,29 +25,32 @@ def plot_figurine_radii(stl_file, label, output_csv):
 
     # Calculate max radius at each interval
     for z in z_intervals:
-        slice_vertices = vertices[(vertices[:, 2] >= z) &
-                                  (vertices[:, 2] < z + (total_height / 100))]
+        slice_vertices = vertices[
+            (vertices[:, 2] >= z) & (vertices[:, 2] < z + (total_height / 100))
+        ]
         if len(slice_vertices) > 0:
-            radii = np.sqrt(slice_vertices[:, 0]**2 + slice_vertices[:, 1]**2)
+            radii = np.sqrt(slice_vertices[:, 0] ** 2 + slice_vertices[:, 1] ** 2)
             max_radii.append(radii.max())
         else:
             max_radii.append(None)  # No data for this height slice
 
     # Normalize data
     normalized_height = (z_intervals - z_min) / total_height
-    normalized_radii = [r / max(filter(None, max_radii))
-                        if r is not None else None for r in max_radii]
+    normalized_radii = [
+        r / max(filter(None, max_radii)) if r is not None else None for r in max_radii
+    ]
 
     # Save data to CSV
-    with open(output_csv, 'w', newline='') as csvfile:
+    with open(output_csv, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Normalized Height", "Normalized Radius"])
         for h, r in zip(normalized_height, normalized_radii):
             writer.writerow([h, r] if r is not None else [h, "No Data"])
 
     # Plot data
-    plt.plot(normalized_height, normalized_radii, label=label, linestyle='-',
-             marker='o')
+    plt.plot(
+        normalized_height, normalized_radii, label=label, linestyle="-", marker="o"
+    )
 
 
 def generate_plots_from_test_data(data_folder):
@@ -66,7 +70,6 @@ def generate_plots_from_test_data(data_folder):
             # Plot and save data
             plot_figurine_radii(stl_path, label, csv_path)
             print(f"Processed: {file_name} -> {csv_name}")
-
 
 
 # Usage

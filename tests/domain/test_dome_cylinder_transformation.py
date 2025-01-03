@@ -72,8 +72,9 @@ def test_transform_cylindrical_vertex(transformation):
 def test_transform_cylindrical_vertex_negative_offset(transformation):
     vertex = (3, 4, 5)  # Cylindrical vertex
     offset = -2
-    transformed_mesh = transformation.transform(Mesh(vertices=[vertex],
-                                                     faces=[]), offset)
+    transformed_mesh = transformation.transform(
+        Mesh(vertices=[vertex], faces=[]), offset
+    )
     expected_vertex = (3 - 2 * 3 / 5, 4 - 2 * 4 / 5, 5)  # Offset inward along normal
     assert np.allclose(
         transformed_mesh.vertices[0], expected_vertex

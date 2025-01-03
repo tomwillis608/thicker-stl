@@ -28,7 +28,7 @@ Instead, both depend on abstractions (protocols/interfaces).
 
 ## Folder Structure
 
-### **src/**
+### **thicker/**
 
 The `thicker/` directory contains the core implementation.
 

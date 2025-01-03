@@ -28,27 +28,29 @@ To get started, you need Python 3.10 or higher installed on your system.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/thickening-tool.git
+   git clone https://github.com/tomwillis608/thickening-tool.git
    cd thickening-tool
    ```
 
 2. Set up a virtual environment (optional but recommended):
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install uv
+   uv venv
+   source .venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. Install dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   uv pip compile requirements.in --output-file requirements.txt
+   uv pip sync requirements.txt
    ```
 
 4. Install CLI Locally: Run the following command to install the package in editable mode (if you are using pip):
 
    ```bash
-   pip install -e .
+   uv pip install -e .
    ```
 
 ## Usage
@@ -64,13 +66,14 @@ thicker-stl --input input.stl --output output.stl --offset 0.1
 To thicken a cylinder model, run the following command:
 
 ```bash
-python main.py --input cylinder.stl --output thickened_cylinder.stl
+thicker-stl --input cylinder.stl --output thickened_cylinder.stl --offset 1
 ```
 
 Where:
 
 - `--input`: Path to the input STL file.
 - `--output`: Path where the thickened STL file will be saved.
+- `--offset`: Amount to thicken, in the units of the STL file.
 
 ## Development
 
@@ -79,7 +82,7 @@ Where:
 ```text
 /docs
     /adrs        # Architectural Decision Records
-/src
+/thicker
     /domain      # Business logic for thickening models
     /infrastructure  # File I/O and external integrations
 /tests
