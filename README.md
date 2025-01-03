@@ -43,14 +43,13 @@ To get started, you need Python 3.10 or higher installed on your system.
 3. Install dependencies:
 
    ```bash
-   uv pip compile requirements.in --output-file requirements.txt
-   uv pip sync requirements.txt
+   uv sync
    ```
 
-4. Install CLI Locally: Run the following command to install the package in editable mode (if you are using pip):
+4. Install CLI Locally: Run the following command to install the package in editable mode:
 
    ```bash
-   uv pip install -e .
+   uv run thicker-stl
    ```
 
 ## Usage
