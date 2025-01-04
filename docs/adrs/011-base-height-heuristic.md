@@ -10,7 +10,8 @@ In tabletop figurine models, the actual figure is often mounted on a disc-like b
 thickening, the cylindrical transformation should apply only to the figurine and not the base. Including the base in
 height and radius
 calculations leads to inaccurate results for the Hemispherical Cylinder Transformation. Manually requiring
-users to input the height of the base adds complexity to the user interface and could result in errors. Therefore, we
+source users to input the height of the base adds complexity to the user interface and could result in errors.
+Therefore, we
 need a heuristic to estimate the base height automatically.
 
 ## Decision
