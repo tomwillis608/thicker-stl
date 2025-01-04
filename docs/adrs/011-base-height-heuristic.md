@@ -7,7 +7,9 @@ Accepted
 ## Context
 
 In tabletop figurine models, the actual figure is often mounted on a disc-like base. For transformations like
-thickening, the cylindrical transformation should apply only to the figurine and not the base. Manually requiring
+thickening, the cylindrical transformation should apply only to the figurine and not the base. Including the base in
+height and radius
+calculations leads to inaccurate results for the Hemispherical Cylinder Transformation. Manually requiring
 users to input the height of the base adds complexity to the user interface and could result in errors. Therefore, we
 need a heuristic to estimate the base height automatically.
 
@@ -23,6 +25,17 @@ particularly regarding the base.
 height.
 4. Integrate this heuristic into the primary application to provide a default value for base height, reducing user
 input requirements.
+
+To exclude the base, we needed a heuristic to identify where the figurine ends and the base begins. Our analysis of
+real-world STL models revealed that the base height is consistently around 19% of the total figure height.
+
+The constant is defined as:
+
+```python
+BASE_HEIGHT_PERCENTAGE = 0.19
+```
+
+It is stored in the use case layer in a `constants.py` module for reuse across the transformation logic.
 
 ## Utility Description
 
@@ -55,11 +68,16 @@ heuristic.
 - Simplifies the user interface by automating base height estimation.
 - Improves accuracy in transformations by excluding the base from calculations.
 - Encourages data-driven decision-making in the application design.
+-This heuristic simplifies the user experience by automatically excluding the base without requiring user input.
+It aligns our transformation logic more closely with the geometry of humanoid figurines, improving accuracy.
 
 ### Negative
 
 - The heuristic may not be accurate for unusual or atypical figurine models.
 - Requires maintenance of the utility for further refinement of the heuristic.
+- The heuristic might not be perfect for all models. Some figurines could have non-standard bases that are taller or
+shorter than the assumed 19%.
+- Future adjustments may be necessary as more data becomes available.
 
 ## Alternatives Considered
 

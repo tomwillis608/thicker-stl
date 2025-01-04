@@ -32,12 +32,12 @@ def test_calculate_radius():
     """
     # Create a simple cylindrical mesh with vertices representing a unit cylinder
     vertices = [
-        (1, 0, 0),  # Vertex at radius 1 along x-axis
-        (0, 1, 0),  # Vertex at radius 1 along y-axis
-        (-1, 0, 0),  # Vertex at radius 1 along -x-axis
-        (0, -1, 0),  # Vertex at radius 1 along -y-axis
-        (0.707, 0.707, 0),  # Vertex at radius ~1 along diagonal
-        (-0.707, -0.707, 0),  # Vertex at radius ~1 along opposite diagonal
+        (1, 0, 1),  # Vertex at radius 1 along x-axis
+        (0, 1, 1),  # Vertex at radius 1 along y-axis
+        (-1, 0, 1),  # Vertex at radius 1 along -x-axis
+        (0, -1, 1),  # Vertex at radius 1 along -y-axis
+        (0.707, 0.707, 1),  # Vertex at radius ~1 along diagonal
+        (-0.707, -0.707, 1),  # Vertex at radius ~1 along opposite diagonal
     ]
 
     faces = []  # Faces are irrelevant for radius calculation
@@ -68,8 +68,8 @@ def test_calculate_height_empty_mesh():
 
 
 def test_calculate_radius_origin_mesh():
-    """Test radius calculation with all vertices at origin."""
-    origin_mesh = Mesh(vertices=[(0, 0, 0), (0, 0, 0), (0, 0, 0)], faces=[(0, 1, 2)])
+    """Test radius calculation with x,y vertices at origin."""
+    origin_mesh = Mesh(vertices=[(0, 0, 1), (0, 0, 1), (0, 0, 1)], faces=[(0, 1, 2)])
     radius = calculate_mesh_radius(origin_mesh)
     assert radius == 0, "Expected radius of origin-only mesh to be 0"
 
