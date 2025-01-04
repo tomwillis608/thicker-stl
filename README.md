@@ -4,6 +4,8 @@ Today's TTRPG mini figures are too dainty. Make those STL thicker.
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tomwillis608/thicker-stl/main.svg)](<https://results.pre-commit.ci/latest/github/tomwillis608/thicker-stl/main>)
 [![codecov](https://codecov.io/gh/tomwillis608/thicker-stl/graph/badge.svg?token=09Z4F6VAW5)](<https://codecov.io/gh/tomwillis608/thicker-stl>)
+[![Sourcery](https://img.shields.io/badge/Sourcery-enabled-brightgreen)](https://sourcery.ai)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
 ## Project Overview
 
