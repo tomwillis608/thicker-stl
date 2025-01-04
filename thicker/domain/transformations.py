@@ -124,7 +124,6 @@ class HemisphericalCylinderTransformation:
         Returns:
             Tuple[float, float, float]: Transformed vertex coordinates.
         """
-        # x, y, z = vertex
         normal = self.calculate_normal(vertex)
         transformed_vertex = (
             vertex[0] + offset * normal[0],
