@@ -17,8 +17,7 @@ def test_cylindrical_model_transformation_read_write(tmpdir):
     """
     # Arrange: Create a simple test STL file
     input_stl_path = "tests/fixtures/test_cylinder_2.stl"
-    output_stl_path = "output.stl"
-    # output_stl_path = tmpdir / "output.stl"
+    output_stl_path = tmpdir / "output.stl"
     reader: MeshReader = STLMeshReader()
     writer: MeshWriter = STLMeshWriter()
     # Define transformation parameters
@@ -66,8 +65,7 @@ def test_cube_model_transformation_read_write(tmpdir):
     """
     # Arrange: Create a simple test STL file
     input_stl_path = "tests/fixtures/test_cube.stl"
-    output_stl_path = "output_cube.stl"
-    # output_stl_path = tmpdir / "output.stl"
+    output_stl_path = tmpdir / "output.stl"
     reader: MeshReader = STLMeshReader()
     writer: MeshWriter = STLMeshWriter()
     # Define transformation parameters
