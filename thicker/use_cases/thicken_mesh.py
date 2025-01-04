@@ -12,6 +12,7 @@ from thicker.domain.transformations import (
 )
 from thicker.interfaces.mesh_reader import MeshReader
 from thicker.interfaces.mesh_writer import MeshWriter
+from thicker.use_cases.constants import BASE_HEIGHT_PERCENTAGE
 
 
 def thicken_a_mesh(original_mesh: Mesh, offset: float) -> Mesh:
@@ -72,20 +73,33 @@ def calculate_mesh_height(mesh: Mesh) -> float:
 
 def calculate_mesh_radius(mesh: Mesh) -> float:
     """
-    Calculate the radius of a given mesh based on its vertices.
+    Calculate the radius of a given mesh based on vertices above the base height.
 
     Args:
         mesh: A Mesh object containing vertices and faces.
 
     Returns:
         float: The radius of the mesh, defined as the maximum distance from
-               the z-axis (0, 0) to any vertex in the x-y plane.
+               the z-axis (0, 0) to any vertex in the x-y plane, excluding the base.
+
+    Raises:
+        ValueError: If the mesh has no vertices above the base height.
     """
     if not mesh.vertices:
         raise ValueError("Mesh contains no vertices.")
 
+    base_height = BASE_HEIGHT_PERCENTAGE * calculate_mesh_height(mesh)
+
+    # Filter vertices above the base height
+    vertices_above_base = [
+        (x, y) for x, y, z in mesh.vertices if z > base_height
+    ]
+
+    if not vertices_above_base:
+        raise ValueError("No vertices found above the base height.")
+
     # Compute squared distances from the z-axis for each vertex
-    squared_distances = [x**2 + y**2 for x, y, _ in mesh.vertices]
+    squared_distances = [x**2 + y**2 for x, y in vertices_above_base]
 
     # Return the square root of the maximum squared distance as the radius
     return max(squared_distances) ** 0.5
