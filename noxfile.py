@@ -9,8 +9,8 @@ DEV_REQUIREMENTS = "requirements-dev.txt"
 
 nox.needs_version = ">=2024.4.15"
 nox.options.default_venv_backend = "uv|virtualenv"
-
-PYPROJECT = nox.project.load_toml("pyproject.toml")
+PYPROJECT_TOML = "pyproject.toml"
+PYPROJECT = nox.project.load_toml(PYPROJECT_TOML)
 
 
 # Define the Nox sessions
@@ -25,12 +25,12 @@ def generate_requirements(session):
 
     # Generate the production requirements.txt
     session.run(
-        "uv", "pip", "compile", "pyproject.toml", "--output-file", "requirements.txt"
+        "uv", "pip", "compile", PYPROJECT_TOML, "--output-file", "requirements.txt"
     )
 
     # Generate the development requirements.txt, including production dependencies
     session.run(
-        "uv", "pip", "compile", "pyproject.toml", "--output-file", DEV_REQUIREMENTS
+        "uv", "pip", "compile", PYPROJECT_TOML, "--output-file", DEV_REQUIREMENTS
     )
 
 
