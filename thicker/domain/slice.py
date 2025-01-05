@@ -30,3 +30,18 @@ class Slice:
         centroid_y = sum(y_coords) / len(y_coords)
 
         return (centroid_x, centroid_y)
+
+    def __repr__(self) -> str:
+        num_vertices = len(self.vertices)
+        if num_vertices == 0:
+            vertices_preview = "[]"
+        elif num_vertices <= 3:
+            vertices_preview = f"{self.vertices}"
+        else:
+            vertices_preview = f"{self.vertices[:3]}, ..."
+
+        return (
+            f"Slice(z_height={self.z_height:.2f}, "
+            f"num_vertices={num_vertices}, "
+            f"vertices={vertices_preview})"
+        )

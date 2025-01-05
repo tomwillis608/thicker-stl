@@ -1,5 +1,6 @@
 """ test the Slice class. """
 
+
 from thicker.domain.slice import Slice
 
 
@@ -84,3 +85,61 @@ def test_slice_collinear_vertices():
     assert (
         slice_obj.centroid() == expected_centroid
     ), f"Expected centroid {expected_centroid}, got {slice_obj.centroid()}"
+
+
+def test_slice_repr_no_vertices():
+    """
+    Test the __repr__ method when the Slice has no vertices.
+    """
+    slice_obj = Slice(vertices=[], z_height=1.0)
+
+    expected = "Slice(z_height=1.00, num_vertices=0, vertices=[])"
+    assert repr(slice_obj) == expected, f"Unexpected repr: {repr(slice_obj)}"
+
+
+def test_slice_repr_few_vertices():
+    """
+    Test the __repr__ method when the Slice has fewer than 3 vertices.
+    """
+    vertices = [(1.0, 2.0, 0.0), (0.5, 1.5, 0.5)]
+    slice_obj = Slice(vertices=vertices, z_height=0.5)
+
+    expected = (
+        "Slice(z_height=0.50, num_vertices=2, "
+        "vertices=[(1.0, 2.0, 0.0), (0.5, 1.5, 0.5)])"
+    )
+    assert repr(slice_obj) == expected, f"Unexpected repr: {repr(slice_obj)}"
+
+
+def test_slice_repr_exactly_three_vertices():
+    """
+    Test the __repr__ method when the Slice has exactly 3 vertices.
+    """
+    vertices = [(1.0, 2.0, 0.0), (0.5, 1.5, 0.5), (0.7, 1.8, 1.0)]
+    slice_obj = Slice(vertices=vertices, z_height=0.5)
+
+    expected = (
+        "Slice(z_height=0.50, num_vertices=3, "
+        "vertices=[(1.0, 2.0, 0.0), (0.5, 1.5, 0.5), (0.7, 1.8, 1.0)])"
+    )
+    assert repr(slice_obj) == expected, f"Unexpected repr: {repr(slice_obj)}"
+
+
+def test_slice_repr_more_than_three_vertices():
+    """
+    Test the __repr__ method when the Slice has more than 3 vertices.
+    """
+    vertices = [
+        (1.0, 2.0, 0.0),
+        (0.5, 1.5, 0.5),
+        (0.7, 1.8, 1.0),
+        (1.2, 2.3, 1.5),
+        (0.9, 1.6, 2.0),
+    ]
+    slice_obj = Slice(vertices=vertices, z_height=1.0)
+
+    expected = (
+        "Slice(z_height=1.00, num_vertices=5, "
+        "vertices=[(1.0, 2.0, 0.0), (0.5, 1.5, 0.5), (0.7, 1.8, 1.0)], ...)"
+    )
+    assert repr(slice_obj) == expected, f"Unexpected repr: {repr(slice_obj)}"
