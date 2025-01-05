@@ -50,8 +50,8 @@ def test_calculate_radius():
 
     # Assert that the calculated radius matches the expected value
     expected_radius = 1.0
-    assert (
-        math.isclose(radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09)
+    assert math.isclose(
+        radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09
     ), f"Expected radius {expected_radius}, got {radius}"
 
 

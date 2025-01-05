@@ -91,9 +91,7 @@ def calculate_mesh_radius(mesh: Mesh) -> float:
     base_height = BASE_HEIGHT_PERCENTAGE * calculate_mesh_height(mesh)
 
     # Filter vertices above the base height
-    vertices_above_base = [
-        (x, y) for x, y, z in mesh.vertices if z > base_height
-    ]
+    vertices_above_base = [(x, y) for x, y, z in mesh.vertices if z > base_height]
 
     if not vertices_above_base:
         raise ValueError("No vertices found above the base height.")

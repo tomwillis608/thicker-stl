@@ -81,8 +81,9 @@ def test_calculate_mesh_radius_excludes_base():
     # The radius should be calculated from vertices above 0.38 (19% of 2.0)
     # Expected max radius should be 0.5 (ignoring the lower vertices)
     expected_radius = 0.5
-    assert (math.isclose(radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09)), \
-        f"Expected radius {expected_radius}, got {radius}"
+    assert math.isclose(
+        radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09
+    ), f"Expected radius {expected_radius}, got {radius}"
 
 
 def test_calculate_radius_no_vertices_above_base():
@@ -121,8 +122,9 @@ def test_calculate_radius_one_vertex_above_base():
     expected_radius = 0.0
 
     radius = calculate_mesh_radius(mesh)
-    assert (math.isclose(radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09)), \
-        f"Expected radius {expected_radius}, got {radius}"
+    assert math.isclose(
+        radius, expected_radius, rel_tol=1e-09, abs_tol=1e-09
+    ), f"Expected radius {expected_radius}, got {radius}"
 
 
 def test_calculate_radius_empty_mesh():
