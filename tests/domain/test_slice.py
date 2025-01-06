@@ -211,3 +211,16 @@ def test_slice_vertices_equality():
         z_height=0.5,
     )
     assert slice_left == slice_right, f"Expect {slice_left} == {slice_right}"
+
+def test_bad_class_eq():
+    """Test if Slices are equal to strings."""
+    a_slice = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+        ],
+        z_height=0.5,
+    )
+
+    a_string = "moof"
+
+    assert a_slice != a_string

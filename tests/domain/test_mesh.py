@@ -40,8 +40,8 @@ def test_inequality():
     assert mesh2 != mesh3
 
 
-def test_bad_class():
-    """Test meshes are equal to strings."""
+def test_bad_class_eq():
+    """Test if Meshes are equal to strings."""
     vertices = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]
     faces = [(0, 1, 2)]
 
