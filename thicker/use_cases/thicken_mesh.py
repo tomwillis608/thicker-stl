@@ -25,8 +25,7 @@ def thicken_a_mesh(original_mesh: Mesh, offset: float) -> Mesh:
     Returns:
         Mesh: A new Mesh instance with thickened vertices.
     """
-    new_mesh = thicken_mesh(original_mesh, offset, calculate_spherical_normal)
-    return new_mesh
+    return thicken_mesh(original_mesh, offset, calculate_spherical_normal)
 
 
 def process_thickening_ori(

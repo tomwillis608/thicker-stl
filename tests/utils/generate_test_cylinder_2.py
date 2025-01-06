@@ -69,9 +69,7 @@ def generate_faces(
             v2 = v0 + 1
             v3 = v1 + 1
 
-            faces.append((v0, v1, v2))
-            faces.append((v2, v1, v3))
-
+            faces.extend(((v0, v1, v2), (v2, v1, v3)))
     # Bottom cap faces
     base_index = radial_segments * (height_segments + 1)
     for r in range(cap_resolution - 1):
@@ -83,9 +81,7 @@ def generate_faces(
             v2 = next_ring_start + i
             v3 = next_ring_start + (i + 1) % radial_segments
 
-            faces.append((v0, v1, v2))
-            faces.append((v2, v1, v3))
-
+            faces.extend(((v0, v1, v2), (v2, v1, v3)))
     # Connect the innermost ring to the bottom center
     innermost_ring_start = base_index + (cap_resolution - 1) * radial_segments
     for i in range(radial_segments):
@@ -106,9 +102,7 @@ def generate_faces(
             v2 = next_ring_start + i
             v3 = next_ring_start + (i + 1) % radial_segments
 
-            faces.append((v0, v1, v2))
-            faces.append((v2, v1, v3))
-
+            faces.extend(((v0, v1, v2), (v2, v1, v3)))
     # Connect the innermost ring to the top center
     innermost_ring_start = base_index + (cap_resolution - 1) * radial_segments
     for i in range(radial_segments):

@@ -65,13 +65,13 @@ def generate_vertices(height, radius, segments):
         angle = 2 * np.pi * i / segments
         x_coord: float = radius * np.cos(angle)
         y_coord: float = radius * np.sin(angle)
-        vertices.append([x_coord, y_coord, float(0)])  # Bottom circle
-        vertices.append([x_coord, y_coord, float(height)])  # Top circle
-    # Add the center of the top and bottom circle to the vertex list
-    vertices.append([float(0), float(0), float(0)])  # Bottom center
-    vertices.append([float(0), float(0), float(height)])  # Top center
-    vertices = np.array(vertices)
-    return vertices
+        vertices.extend(
+            ([x_coord, y_coord, float(0)], [x_coord, y_coord, float(height)])
+        )
+    vertices.extend(
+        ([float(0), float(0), float(0)], [float(0), float(0), float(height)])
+    )
+    return np.array(vertices)
 
 
 def generate_faces(segments, vertices):
@@ -86,17 +86,14 @@ def generate_faces(segments, vertices):
         top_left = bottom_left + 1
         top_right = bottom_right + 1
 
-        # Side faces (2 triangles per segment)
-        faces.append([bottom_left, bottom_right, top_left])
-        faces.append([top_left, bottom_right, top_right]) # fix winding order TL to TL
-
-        # Bottom face (triangles connecting bottom vertices to center)
-        faces.append([bottom_center, bottom_right, bottom_left]) # fix winding order, normal [0 0 -1]
-
-
-        # Top face (triangles connecting top vertices to center)
-        faces.append([top_center, top_left, top_right]) # fix winding order, normal [0 0 -1]
-
+        faces.extend(
+            (
+                [bottom_left, bottom_right, top_left],
+                [top_left, bottom_right, top_right],
+                [bottom_center, bottom_right, bottom_left],
+                [top_center, top_left, top_right],
+            )
+        )
     return faces
 
 
