@@ -30,7 +30,9 @@ def test_thicken_cross_section():
     narrow_slice = Slice(
         vertices=[vertices[1], vertices[2], vertices[3], vertices[4]], z_height=0.5
     )
-    narrow_slices = [ narrow_slice, ]
+    narrow_slices = [
+        narrow_slice,
+    ]
 
     # Apply the thickening transformation
     thickened_mesh = thicken_cross_section(mesh, narrow_slices, offset)
@@ -80,7 +82,9 @@ def test_thicken_offset_cross_section():
     narrow_slice = Slice(
         vertices=[vertices[1], vertices[2], vertices[3], vertices[4]], z_height=0.5
     )
-    narrow_slices = [ narrow_slice, ]
+    narrow_slices = [
+        narrow_slice,
+    ]
 
     # Apply the thickening transformation
     thickened_mesh = thicken_cross_section(mesh, narrow_slices, offset)
@@ -95,7 +99,6 @@ def test_thicken_offset_cross_section():
     assert math.isclose(
         thickened_mesh.vertices[1][2], (0.7, 2.2, 0.5)[2], rel_tol=1e-5
     ), f"Expected vertex to be thickened, got {thickened_mesh.vertices[1]}"
-
 
     # Assert that other sections remain unchanged
     assert math.isclose(thickened_mesh.vertices[0][0], vertices[0][0], rel_tol=1e-5)

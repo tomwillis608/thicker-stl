@@ -38,7 +38,7 @@ def detect_narrow_cross_sections(mesh: Mesh, threshold: float = 0.5) -> list[Sli
             continue  # Skip empty slices
 
         # Calculate the max distance from the z-axis
-        max_radius = max((x ** 2 + y ** 2) ** 0.5 for x, y, _ in slice_vertices)
+        max_radius = max((x**2 + y**2) ** 0.5 for x, y, _ in slice_vertices)
 
         # Check if the radius is below the threshold
         if max_radius < threshold:

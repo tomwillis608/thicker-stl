@@ -212,6 +212,7 @@ def test_slice_vertices_equality():
     )
     assert slice_left == slice_right, f"Expect {slice_left} == {slice_right}"
 
+
 def test_bad_class_eq():
     """Test if Slices are equal to strings."""
     a_slice = Slice(

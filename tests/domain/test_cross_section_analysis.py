@@ -42,7 +42,7 @@ def test_no_narrow_cross_sections_in_uniform_cylinder():
 
     # Assert that no narrow cross-sections were found
     assert (
-        narrow_slices == []
+        not narrow_slices
     ), f"Expected no narrow cross-sections, but found {narrow_slices}"
 
 

@@ -52,12 +52,7 @@ class CrossSectionThickener:
         else:
             delta_y = math.copysign(self.offset, vertex[1] - centroid[1])
 
-        new_vertex = (
-            vertex[0] + delta_x,
-            vertex[1] + delta_y,
-            vertex[2],  # No thickening in z-direction
-        )
-        return new_vertex
+        return vertex[0] + delta_x, vertex[1] + delta_y, vertex[2]
 
     def thicken(self, mesh: Mesh, narrow_sections: list[Slice]) -> Mesh:
         """
@@ -74,9 +69,7 @@ class CrossSectionThickener:
         new_vertices = []
         slice_vertices = []
         for narrow_section in narrow_sections:
-            for vertex in narrow_section.vertices:
-                slice_vertices.append(vertex)
-
+            slice_vertices.extend(iter(narrow_section.vertices))
         for x, y, z in mesh.vertices:
             if (x, y, z) in slice_vertices:
                 new_vertex = self.get_thickened_vertex(x, y, z, narrow_sections)
@@ -88,14 +81,13 @@ class CrossSectionThickener:
     def get_thickened_vertex(
         self, x: float, y: float, z: float, narrow_sections: list[Slice]
     ) -> Tuple[float, float, float]:
-        """ Adjust vertices at detected narrow sections. """
+        """Adjust vertices at detected narrow sections."""
         for narrow_slice in narrow_sections:
             if (x, y, z) in narrow_slice.vertices:
                 # Thicken according to the slice centroid
                 # Move x and y radially from the slice centroid
                 slice_centroid = narrow_slice.centroid()
-                new_vertex = self.thicken_vertex(
+                return self.thicken_vertex(
                     vertex=(x, y, z),
                     centroid=slice_centroid,
                 )
-                return new_vertex

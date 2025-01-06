@@ -16,7 +16,7 @@ def test_stl_mesh_reader_reads_valid_file(tmp_path):
     reader = STLMeshReader()
 
     # Act: Read the file
-    vertices, faces = reader.read(str(stl_filepath))
+    vertices, faces = reader.read(stl_filepath)
 
     # Assert: Verify expected output
     assert isinstance(vertices, list)

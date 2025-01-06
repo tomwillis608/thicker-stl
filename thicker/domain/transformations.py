@@ -125,12 +125,11 @@ class HemisphericalCylinderTransformation:
             Tuple[float, float, float]: Transformed vertex coordinates.
         """
         normal = self.calculate_normal(vertex)
-        transformed_vertex = (
+        return (
             vertex[0] + offset * normal[0],
             vertex[1] + offset * normal[1],
             vertex[2] + offset * normal[2],
         )
-        return transformed_vertex
 
     def calculate_normal(self, vertex: tuple) -> tuple:
         """
