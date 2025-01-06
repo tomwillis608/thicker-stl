@@ -1,5 +1,6 @@
-""" test the Slice class. """
+"""test the Slice class."""
 
+import math
 
 from thicker.domain.slice import Slice
 
@@ -14,7 +15,7 @@ def test_slice_initialization():
     slice_obj = Slice(vertices=vertices, z_height=z_height)
 
     assert slice_obj.vertices == vertices
-    assert slice_obj.z_height == z_height
+    assert math.isclose(slice_obj.z_height, z_height)
 
 
 def test_slice_centroid():
@@ -143,3 +144,70 @@ def test_slice_repr_more_than_three_vertices():
         "vertices=[(1.0, 2.0, 0.0), (0.5, 1.5, 0.5), (0.7, 1.8, 1.0)], ...)"
     )
     assert repr(slice_obj) == expected, f"Unexpected repr: {repr(slice_obj)}"
+
+
+def test_slice_vertices_inequality():
+    """Test slice inequality in vertices."""
+    slice_left = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+            (-0.4, 0.0, 0.5),
+            (0.0, -0.4, 0.5),
+        ],
+        z_height=0.5,
+    )
+    slice_right = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+        ],
+        z_height=0.5,
+    )
+    assert slice_left != slice_right, f"Expect {slice_left} != {slice_right}"
+
+
+def test_slice_z_height_inequality():
+    """Test slice inequality in z_height."""
+    slice_left = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+            (-0.4, 0.0, 0.5),
+            (0.0, -0.4, 0.5),
+        ],
+        z_height=0.5,
+    )
+    slice_right = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+            (-0.4, 0.0, 0.5),
+            (0.0, -0.4, 0.5),
+        ],
+        z_height=0.2,
+    )
+    assert slice_left != slice_right, f"Expect {slice_left} != {slice_right}"
+
+
+def test_slice_vertices_equality():
+    """Test slice equality method."""
+    slice_left = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+            (-0.4, 0.0, 0.5),
+            (0.0, -0.4, 0.5),
+        ],
+        z_height=0.5,
+    )
+    slice_right = Slice(
+        vertices=[
+            (0.4, 0.0, 0.5),
+            (0.0, 0.4, 0.5),
+            (-0.4, 0.0, 0.5),
+            (0.0, -0.4, 0.5),
+        ],
+        z_height=0.5,
+    )
+    assert slice_left == slice_right, f"Expect {slice_left} == {slice_right}"

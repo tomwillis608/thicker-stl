@@ -1,4 +1,4 @@
-""" The Slice class  - a set of vertices in a height range. """
+"""The Slice class  - a set of vertices in a height range."""
 
 
 class Slice:
@@ -30,6 +30,14 @@ class Slice:
         centroid_y = sum(y_coords) / len(y_coords)
 
         return (centroid_x, centroid_y)
+
+    def __eq__(self, other):
+        """Overrides the default implementation"""
+        if isinstance(other, Slice):
+            return (self.vertices == other.vertices) and (
+                self.z_height == other.z_height
+            )
+        return False
 
     def __repr__(self) -> str:
         num_vertices = len(self.vertices)
