@@ -1,7 +1,8 @@
-""" Test cross-section analysis domain code."""
+"""Test cross-section analysis domain code."""
 
 from thicker.domain.cross_section_analysis import detect_narrow_cross_sections
 from thicker.domain.mesh import Mesh
+from thicker.domain.slice import Slice
 
 
 def test_no_narrow_cross_sections_in_uniform_cylinder():
@@ -37,12 +38,12 @@ def test_no_narrow_cross_sections_in_uniform_cylinder():
     mesh = Mesh(vertices=vertices, faces=faces)
 
     # Run the narrow cross-section detection
-    narrow_sections = detect_narrow_cross_sections(mesh, threshold=0.5)
+    narrow_slices: list[Slice] = detect_narrow_cross_sections(mesh, threshold=0.5)
 
     # Assert that no narrow cross-sections were found
     assert (
-        narrow_sections == []
-    ), f"Expected no narrow cross-sections, but found {narrow_sections}"
+        narrow_slices == []
+    ), f"Expected no narrow cross-sections, but found {narrow_slices}"
 
 
 def test_detect_narrow_waist():
@@ -77,9 +78,19 @@ def test_detect_narrow_waist():
     mesh = Mesh(vertices=vertices, faces=faces)
 
     # Call the function with a threshold of 0.5
-    narrow_sections = detect_narrow_cross_sections(mesh, threshold=0.5)
-
-    # Validate that the narrow section is detected at the expected height
-    assert narrow_sections == [
-        0.5
-    ], f"Expected narrow section at z=0.5, got {narrow_sections}"
+    narrow_sections: list[Slice] = detect_narrow_cross_sections(mesh, threshold=0.5)
+    expected_slices = [
+        Slice(
+            vertices=[
+                (0.4, 0.0, 0.5),
+                (0.0, 0.4, 0.5),
+                (-0.4, 0.0, 0.5),
+                (0.0, -0.4, 0.5),
+            ],
+            z_height=0.5,
+        ),
+    ]
+    # Validate that the one narrow section is detected at the expected height
+    assert (
+        narrow_sections[0] == expected_slices[0]
+    ), f"Expected narrow section at z=0.5, got {narrow_sections[0]}"

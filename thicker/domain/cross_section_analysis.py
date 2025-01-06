@@ -1,9 +1,10 @@
-""" Cross-section analysis of meshes. """
+"""Cross-section analysis of meshes."""
 
 from thicker.domain.mesh import Mesh
+from thicker.domain.slice import Slice
 
 
-def detect_narrow_cross_sections(mesh: Mesh, threshold: float = 0.5) -> list[float]:
+def detect_narrow_cross_sections(mesh: Mesh, threshold: float = 0.5) -> list[Slice]:
     """
     Detect narrow cross-sections in a given mesh.
 
@@ -12,7 +13,7 @@ def detect_narrow_cross_sections(mesh: Mesh, threshold: float = 0.5) -> list[flo
         threshold: The minimum allowable radius for a cross-section.
 
     Returns:
-        A list of z-heights where the cross-section radius is below the threshold.
+        A list of Slices where the cross-section radius is below the threshold.
     """
     narrow_sections = []
     z_values = [z for _, _, z in mesh.vertices]
@@ -30,17 +31,17 @@ def detect_narrow_cross_sections(mesh: Mesh, threshold: float = 0.5) -> list[flo
 
         # Get vertices in this slice
         slice_vertices = [
-            (x, y) for x, y, z in mesh.vertices if slice_z_min <= z < slice_z_max
+            (x, y, z) for x, y, z in mesh.vertices if slice_z_min <= z < slice_z_max
         ]
 
         if not slice_vertices:
             continue  # Skip empty slices
 
         # Calculate the max distance from the z-axis
-        max_radius = max((x ** 2 + y ** 2) ** 0.5 for x, y in slice_vertices)
+        max_radius = max((x ** 2 + y ** 2) ** 0.5 for x, y, _ in slice_vertices)
 
         # Check if the radius is below the threshold
         if max_radius < threshold:
-            narrow_sections.append(slice_z_min)
+            narrow_sections.append(Slice(slice_vertices, slice_z_min))
 
     return narrow_sections
