@@ -1,8 +1,37 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
+    // https://docs.renovatebot.com/presets-config/#configbase
     "config:recommended",
 
+    // https://docs.renovatebot.com/presets-default/#automergepatch
+    ":automergePatch",
 
-  ]
+    // https://docs.renovatebot.com/presets-default/#automergeminor
+    ":automergeMinor",
+
+    // https://docs.renovatebot.com/presets-default/#enableprecommit
+    ":enablePreCommit"
+  ],
+
+  // https://docs.renovatebot.com/configuration-options/#labels
+  labels: ["dependencies"],
+
+  // https://docs.renovatebot.com/configuration-options/#schedule
+  schedule: ["before 5am on saturday"],
+
+  // https://docs.renovatebot.com/configuration-options/#platformautomerge
+  platformAutomerge: true,
+
+  // https://docs.renovatebot.com/presets-default/#automergepr
+  "automergeType": "pr",
+
+  // https://docs.renovatebot.com/configuration-options/#lockfilemaintenance
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ["before 5am on saturday"],
+  },
 }
+
+// uv and uv.lock are supported per
+// https://docs.renovatebot.com/modules/manager/pep621/#additional-information
