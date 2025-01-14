@@ -26,7 +26,7 @@ repos:
         args: ["--fix"]
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: "0.5.17"
+    rev: "0.5.18"
     hooks:
       - id: uv-lock
         name: check uv lock file consistency
@@ -50,7 +50,7 @@ repos:
       - id: yamllint
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 39.100.1
+    rev: 39.106.0
     hooks:
       - id: renovate-config-validator
         args: [--strict]
