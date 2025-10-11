@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.13  # Use your project's Python version
+          python-version: 3.14  # Use your project's Python version
 
       - name: Install Dependencies for Scans
         run: |
