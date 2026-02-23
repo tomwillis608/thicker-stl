@@ -33,7 +33,7 @@ repos:
         args: ["--locked"]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: "v0.45.0"
+    rev: "v0.47.0"
     hooks:
       - id: markdownlint
         args: ["-f"]
@@ -50,7 +50,7 @@ repos:
       - id: yamllint
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 39.264.0
+    rev: 43.31.6
     hooks:
       - id: renovate-config-validator
         args: [--strict]
